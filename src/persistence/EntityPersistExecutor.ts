@@ -89,8 +89,8 @@ export class EntityPersistExecutor {
                             new Subject({
                                 metadata,
                                 entity: entity,
-                                canBeInserted: this.mode === "save",
-                                canBeUpdated: this.mode === "save",
+                                canBeInserted: this.options?.allowedOperations?(this.options?.allowedOperations==="insert" && this.mode==="save"):this.mode==="save",
+                                canBeUpdated: this.options?.allowedOperations?(this.options?.allowedOperations==="update" && this.mode === "save"):this.mode==="save",
                                 mustBeRemoved: this.mode === "remove",
                                 canBeSoftRemoved: this.mode === "soft-remove",
                                 canBeRecovered: this.mode === "recover",

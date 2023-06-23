@@ -36,4 +36,10 @@ export interface SaveOptions {
      * Enabled by default.
      */
     reload?: boolean
+
+    /**
+     * allowedOperations: ["insert", "update"]
+     * if nothing than normal save would work fine
+     */
+    allowedOperations?:"insert" | "update"
 }
