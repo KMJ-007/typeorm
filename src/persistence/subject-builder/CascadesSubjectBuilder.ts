@@ -23,6 +23,7 @@ export class CascadesSubjectBuilder {
     build(
         subject: Subject,
         operationType: "save" | "remove" | "soft-remove" | "recover",
+        allowedOperations?:"insert" | "update"
     ) {
         subject.metadata
             .extractRelationValuesFromEntity(
@@ -58,15 +59,14 @@ export class CascadesSubjectBuilder {
                     )
                         // if its not marked for insertion yet
                         alreadyExistRelationEntitySubject.canBeInserted =
-                            relation.isCascadeInsert === true &&
-                            operationType === "save"
+                            relation.isCascadeInsert === true && allowedOperations?(allowedOperations==="insert" && operationType==="save"):operationType==="save"
                     if (
                         alreadyExistRelationEntitySubject.canBeUpdated === false
                     )
                         // if its not marked for update yet
                         alreadyExistRelationEntitySubject.canBeUpdated =
                             relation.isCascadeUpdate === true &&
-                            operationType === "save"
+                            allowedOperations?(allowedOperations==="update" && operationType==="save"):operationType==="save"
                     if (
                         alreadyExistRelationEntitySubject.canBeSoftRemoved ===
                         false
@@ -94,10 +94,10 @@ export class CascadesSubjectBuilder {
                     entity: relationEntity,
                     canBeInserted:
                         relation.isCascadeInsert === true &&
-                        operationType === "save",
+                        allowedOperations?(allowedOperations==="insert" && operationType==="save"):operationType==="save",
                     canBeUpdated:
                         relation.isCascadeUpdate === true &&
-                        operationType === "save",
+                        allowedOperations?(allowedOperations==="update" && operationType==="save"):operationType==="save",
                     canBeSoftRemoved:
                         relation.isCascadeSoftRemove === true &&
                         operationType === "soft-remove",

@@ -106,7 +106,7 @@ export class EntityPersistExecutor {
                     subjects.forEach((subject) => {
                         // next step we build list of subjects we will operate with
                         // these subjects are subjects that we need to insert or update alongside with main persisted entity
-                        cascadesSubjectBuilder.build(subject, this.mode)
+                        cascadesSubjectBuilder.build(subject, this.mode,this.options?.allowedOperations)
                     })
                     // console.timeEnd("building cascades...");
 
